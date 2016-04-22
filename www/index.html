@@ -39,6 +39,7 @@
     <script>
       var pathBad='http://jnideas.com/sounds/bad.mp3';
       var pathGood='http://jnideas.com/sounds/good.wav';
+      var pathWelcome='http://jnideas.com/sounds/welcome.mp3';
       var n_start=0;
       var n_interval=[10,15,30,40,45];
       var lenArr=(n_interval.length-1);
@@ -125,13 +126,14 @@
       var my_media = null;
       var mediaTimer = null;
       function onDeviceReady() {
-        playAudio(pathGood);
+        playAudio(pathWelcome);
       }
 
       function playAudio(src) {
         my_media = null;
         mediaTimer = null;
         if (my_media == null) {
+          stopAudio();
           my_media = new Media(src, onSuccess, onError);
         }
         my_media.play();
