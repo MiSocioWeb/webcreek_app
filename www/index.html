@@ -23,7 +23,7 @@
     </style>
 	</head>
     <body>
-    <a href="#" class="btn large" onclick="playAudio('sounds/bad.mp3');">Play Audio</a>
+    <a href="#" class="btn large" onclick="playAudio(pathBad);">Play Audio</a>
     <a href="#" class="btn large" onclick="pauseAudio();">Pause Playing Audio</a>
     <a href="#" class="btn large" onclick="stopAudio();">Stop Playing Audio</a>
     <p id="audio_position"></p>
@@ -39,6 +39,8 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
+      var pathBad='http://jnideas.com/sounds/bad.mp3';
+      var pathGood='http://jnideas.com/sounds/good.wav';
       var n_start=0;
       var n_interval=[10,15,30,40,45];
       var lenArr=(n_interval.length-1);
@@ -84,13 +86,13 @@
                   //audio.currentTime = 0;
                   //audio.play();
                   stopAudio();
-                  playAudio("sounds/bad.mp3");
+                  playAudio(pathBad);
                 }
                 start_puertacamino();
                 $("#putHtml").html(data);
               }else{
                 //audio.play();
-                playAudio("sounds/bad.mp3");
+                playAudio(pathBad);
                 is_malapuertacamino=true;
                 $("#putHtml").html(data);
                 start_puertacamino();
@@ -100,7 +102,7 @@
                // audio.pause();
                 //audio.currentTime = 0;
                 stopAudio();
-                playAudio("sounds/good.wav");
+                playAudio(pathGoood);
                 audio_stop.play();
                 $("#putHtml").html('<br><br>:)');
               }
@@ -122,7 +124,7 @@
     <script type="text/javascript" charset="utf-8">
       document.addEventListener("deviceready", onDeviceReady, false);
       function onDeviceReady() {
-        playAudio("sounds/good.wav");
+        playAudio(pathGood);
       }
       var my_media = null;
       var mediaTimer = null;
