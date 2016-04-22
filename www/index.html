@@ -76,7 +76,7 @@
 
             if(lengthChars < 100 && badGate==true  ){
               if(is_malapuertacamino){
-                bad_current=audio.currentTime;
+                //bad_current=audio.currentTime;
                 ////bad_duration=audio.duration;
                 //porcent_bad_duration = bad_duration -  (bad_duration * 0.25 );
                 //if( (bad_duration == bad_current) || bad_current >= porcent_bad_duration ){
@@ -87,11 +87,13 @@
                   //stopAudio();
                   //playAudio(pathBad);
                 //}
+                stopAudio();
                 playAudio(pathBad);
                 start_puertacamino();
                 $("#putHtml").html(data);
               }else{
                 //audio.play();
+
                 playAudio(pathBad);
                 is_malapuertacamino=true;
                 $("#putHtml").html(data);
