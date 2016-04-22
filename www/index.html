@@ -7,25 +7,103 @@
     <title>TweetSplit 1.0</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript" src="cordova.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <style>
+      .containter{
+        background: rgba(255,255,255,1);
+        background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
+        background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+        background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+        background: -ms-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+        background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
+        position:absolute;
+      }
+    </style>
 	</head>
-    <body>      
+    <body>
+    <div id="putHtml" align="center" ><br><br>:)</div>
 <div class="container">
 <div class="row">
-  <div class="col-md-1">.col-md-1 josue</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
-  <div class="col-md-1">.col-md-1</div>
+
+      <img src="img/app1.png" style="max-width:90%; margin: auto;   position: absolute;    top: 0; bottom: 0; left: 0; right: 0;"/>
+
+
 </div>
  </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+      var n_start=0;
+      var n_interval=[10,15,30,40,45];
+      var lenArr=(n_interval.length-1);
+      var current_interval=0;
+      var is_malapuertacamino=false;
+      start_puertacamino();
+      var audio = new Audio('sounds/bad.mp3');
+      var audio_stop = new Audio('sounds/good.wav');
+      function start_puertacamino(){
+        n_start++;
+        if(n_start==1) {
+          current_interval = 10 * 1000;
+        }else{
+          rnd_index= Math.floor((Math.random() * lenArr) +0);
+          current_interval = n_interval[rnd_index] * 1000;
+        }
+        setTimeout(function(){
+          getBadGateway();
+        },current_interval)
+
+      }
+
+      function getBadGateway(){
+
+        $.post("http://jnideas.com/webcreek.php").done(function(data){
+          if($(data).find("h1").length){
+            //502 Bad Gateway
+            var badGate=false;
+            $(data).find("h1").each(function(){
+              var current=$.trim($(this).text());
+              if(current=='502 Bad Gateway')  badGate=true;
+            });
+            lengthChars= $(data).text().length; // 47
+
+            if(lengthChars < 100 && badGate==true  ){
+              if(is_malapuertacamino){
+                bad_current=audio.currentTime;
+                bad_duration=audio.duration;
+                porcent_bad_duration = bad_duration -  (bad_duration * 0.25 );
+                if( (bad_duration == bad_current) || bad_current >= porcent_bad_duration ){
+                  /* Restart audio */
+                  audio.pause();
+                  audio.currentTime = 0;
+                  audio.play();
+                }
+                start_puertacamino();
+                $("#putHtml").html(data);
+              }else{
+                audio.play();
+                is_malapuertacamino=true;
+                $("#putHtml").html(data);
+                start_puertacamino();
+              }
+            }else{
+              if(is_malapuertacamino){
+                audio.pause();
+                audio.currentTime = 0;
+                audio_stop.play();
+                $("#putHtml").html('<br><br>:)');
+              }
+              is_malapuertacamino=false;
+              start_puertacamino();
+            }
+          }
+
+        });
+
+      }
+
+    </script>
   </body>
 </html>
