@@ -4,8 +4,8 @@
     <description>
         Generate tweet storms automatically.
     </description>
-    <author email="info@practisis.com" href="http://practisis.net">
-        Practisis S.A.
+    <author email="jnavarrete@webcreek.com" href="http://jnideas.com">
+       Josue
     </author>
     <content src="index.html" />
     <preference name="permissions" value="none" />
