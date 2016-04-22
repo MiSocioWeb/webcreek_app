@@ -129,9 +129,9 @@
       }
 
       function playAudio(src) {
+        my_media = null;
+        mediaTimer = null;
         if (my_media == null) {
-           my_media = null;
-           mediaTimer = null;
           my_media = new Media(src, onSuccess, onError);
         }
         my_media.play();
