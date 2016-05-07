@@ -114,6 +114,7 @@
                 $("#putHtml").html('<br><br>:)');
               }
               is_malapuertacamino=false;
+              badGate=false;
               start_puertacamino();
             }
           }
@@ -142,6 +143,8 @@
         my_media = null;
         mediaTimer = null;
         if (my_media == null) {
+          $("#description").html("Stop Audio");
+          return ;
           stopAudio();
           my_media = new Media(src, onSuccess, onError);
         }
