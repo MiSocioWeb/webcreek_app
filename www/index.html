@@ -143,8 +143,7 @@
       }
 
       function playAudio(src) {
-        $("#description").html("play Audio" + src);
-        return;
+
         my_media = null;
         mediaTimer = null;
         if (my_media == null) {
@@ -159,6 +158,7 @@
                     function(position) {
                       if (position > -1) {
                         setAudioPosition((position) + " sec");
+                        $("#description").html("play Audio" + src + ":" + (position) + " sec" );
                       }
                     },
                     function(e) {
@@ -177,7 +177,7 @@
 
       function stopAudio() {
         $("#description").html("Stop Audio");
-        return ;
+
         if (my_media) {
           my_media.stop();
         }
