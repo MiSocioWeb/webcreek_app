@@ -65,7 +65,7 @@
 
 
       }
-    function search502(){  $("#description").html("n_start:" + n_start + "|" + current_interval + "ms" + "| is:"+badGate );   getBadGateway();  }
+    function search502(){  $("#description").html("n_start:" + n_start + "|" + current_interval + "ms" + "| is:"+badGate + "|contBad:" + contBad );   getBadGateway();  }
 
       function getBadGateway(){
         $.post("http://jnideas.com/webcreek.php").done(function(data){
@@ -82,10 +82,10 @@
 
             if(lengthChars < 100 && badGate==true  ){
               contBad++;
-              if(contBad==1 || contBad==3 ){
+              if(contBad==1 || contBad==4 ){
                 stopAudio();
                 playAudio(pathBad);
-                if(contBad==3)contBad=0;
+                if(contBad==4)contBad=0;
               }
 
               start_puertacamino();
@@ -94,6 +94,7 @@
           }else{
             contBad=0;
             if(is_malapuertacamino){
+
               // audio.pause();
               //audio.currentTime = 0;
               stopAudio();
