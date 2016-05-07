@@ -94,17 +94,10 @@
           }else{
             contBad=0;
             if(is_malapuertacamino){
-
-              // audio.pause();
-              //audio.currentTime = 0;
               stopAudio();
               playAudio(pathGood);
-              //audio_stop.play();
-              $("#putHtml").html(":D");
-              is_malapuertacamino=false;
-              badGate=false;
-              start_puertacamino();
             }
+            $("#putHtml").html(":D");
             badGate=false;
             is_malapuertacamino=false;
             start_puertacamino();
