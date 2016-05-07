@@ -118,7 +118,10 @@
               start_puertacamino();
             }
           }else{
+            badGate=false;
+            is_malapuertacamino=false;
             start_puertacamino();
+            $("#description").html(":D");
           }
 
         });
