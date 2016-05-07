@@ -28,7 +28,7 @@
     <div id="putHtml" align="center" ><br><br>:)</div>
 <div class="container">
 <div class="row">
-
+      <label id="description">  </label>
       <img src="img/app1.png" style="max-width:90%; margin: auto;   position: absolute;    top: 0; bottom: 0; left: 0; right: 0;"/>
 
 
@@ -37,6 +37,8 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
+      var badGate=false;
+      var timmerBadgateWay;
       var pathBad='http://jnideas.com/sounds/bad.mp3';
       var pathGood='http://jnideas.com/sounds/good.wav';
       var pathWelcome='http://jnideas.com/sounds/welcome.mp3';
@@ -50,28 +52,31 @@
       var audio_stop = new Audio('sounds/good.wav');
       function start_puertacamino(){
         n_start++;
-        if(n_start==1) {
+
+
           current_interval = 10 * 1000;
-        }else{
-          rnd_index= Math.floor((Math.random() * lenArr) +0);
-          current_interval = n_interval[rnd_index] * 1000;
-        }
-        setTimeout(function(){
-          getBadGateway();
-        },current_interval)
+          if(n_start==1) search502();
+          else
+       timmerBadgateWay=setTimeout(function(){
+         search502();
+         clearInterval(timmerBadgateWay);
+        },current_interval);
+
 
       }
+    function search502(){  $("#description").html("n_start:" + n_start + "|" + current_interval + "ms" + "| is:"+badGate );   getBadGateway();  }
 
       function getBadGateway(){
-
         $.post("http://jnideas.com/webcreek.php").done(function(data){
+
           if($(data).find("h1").length){
             //502 Bad Gateway
-            var badGate=false;
+            badGate=false;
             $(data).find("h1").each(function(){
               var current=$.trim($(this).text());
               if(current=='502 Bad Gateway')  badGate=true;
             });
+
             lengthChars= $(data).text().length; // 47
 
             if(lengthChars < 100 && badGate==true  ){
@@ -93,7 +98,7 @@
                 $("#putHtml").html(data);
               }else{
                 //audio.play();
-
+                stopAudio();
                 playAudio(pathBad);
                 is_malapuertacamino=true;
                 $("#putHtml").html(data);
