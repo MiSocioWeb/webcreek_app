@@ -39,6 +39,7 @@
     <script>
       var badGate=false;
       var timmerBadgateWay;
+      var contBad=0;
       var pathBad='http://jnideas.com/sounds/bad.mp3';
       var pathGood='http://jnideas.com/sounds/good.wav';
       var pathWelcome='http://jnideas.com/sounds/welcome.mp3';
@@ -80,38 +81,18 @@
             lengthChars= $(data).text().length; // 47
 
             if(lengthChars < 100 && badGate==true  ){
-              if(is_malapuertacamino){
-                //bad_current=audio.currentTime;
-                ////bad_duration=audio.duration;
-                //porcent_bad_duration = bad_duration -  (bad_duration * 0.25 );
-                //if( (bad_duration == bad_current) || bad_current >= porcent_bad_duration ){
-                  /* Restart audio */
-                  //audio.pause();
-                  //audio.currentTime = 0;
-                  //audio.play();
-                  //stopAudio();
-                  //playAudio(pathBad);
-                //}
+              contBad++;
+              if(contBad==1 || contBad==3 ){
                 stopAudio();
                 playAudio(pathBad);
-                start_puertacamino();
-                $("#putHtml").html(data);
-              }else{
-                //audio.play();
-                stopAudio();
-                playAudio(pathBad);
-                is_malapuertacamino=true;
-                $("#putHtml").html(data);
-                start_puertacamino();
+                if(contBad==3)contBad=0;
               }
-            }else{
 
-
+              start_puertacamino();
+              $("#putHtml").html(data);
             }
           }else{
-
-
-
+            contBad=0;
             if(is_malapuertacamino){
               // audio.pause();
               //audio.currentTime = 0;
