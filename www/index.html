@@ -81,8 +81,8 @@
             if(lengthChars < 100 && badGate==true  ){
 
               contBad++;
-              if(contBad>4)contBad=1;
-              if(contBad==1 || contBad==4 ){
+              if(contBad>3)contBad=1;
+              if(contBad==1 ){
                 stopAudio();
                 playAudio(pathBad);
               }
@@ -93,13 +93,13 @@
           }else{
             contBad=0;
             $("#putHtml").html("not badgateway");
-            if(is_malapuertacamino){
+            if(badGate){
               stopAudio();
               playAudio(pathGood);
             }
             $("#putHtml").html(":D");
             badGate=false;
-            is_malapuertacamino=false;
+            //is_malapuertacamino=false;
             start_puertacamino();
           }
         });
