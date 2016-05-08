@@ -53,8 +53,6 @@
       var audio_stop = new Audio('sounds/good.wav');
       function start_puertacamino(){
         n_start++;
-
-
           current_interval = 10 * 1000;
           if(n_start==1) search502();
           else
@@ -65,7 +63,7 @@
 
 
       }
-    function search502(){  $("#description").html("n_start:" + n_start + "|" + current_interval + "ms" + "| is:"+badGate + "|contBad:" + contBad );   getBadGateway();  }
+    function search502(){  $("#description").html("<span style='color:red;' id='putStatus'>(Status)</span> n_start:" + n_start + "|" + current_interval + "ms" + "| is:"+badGate + "|contBad:" + contBad );   getBadGateway();  }
 
       function getBadGateway(){
         $.post("http://jnideas.com/webcreek.php").done(function(data){
@@ -85,14 +83,15 @@
               if(contBad==1 || contBad==4 ){
                 stopAudio();
                 playAudio(pathBad);
-                if(contBad==4)contBad=0;
               }
+              if(contBad>=4)contBad=0;
 
               start_puertacamino();
               $("#putHtml").html(data);
             }
           }else{
             contBad=0;
+            $("#description").html("not badgateway");
             if(is_malapuertacamino){
               stopAudio();
               playAudio(pathGood);
@@ -123,7 +122,7 @@
       }
 
       function playAudio(src) {
-
+      $("#putStatus").html("Play");
         my_media = null;
         mediaTimer = null;
         if (my_media == null) {
@@ -138,7 +137,7 @@
                     function(position) {
                       if (position > -1) {
                         setAudioPosition((position) + " sec");
-                        $("#description").html("play Audio" + src + ":" + (position) + " sec" );
+                        //$("#description").html("play Audio" + src + ":" + (position) + " sec" );
                       }
                     },
                     function(e) {
@@ -156,7 +155,7 @@
       }
 
       function stopAudio() {
-        $("#description").html("Stop Audio");
+        $("#putStatus").html("Stop Audio");
 
         if (my_media) {
           my_media.stop();
