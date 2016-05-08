@@ -163,7 +163,12 @@
         $("#putStatus").html("Stop Audio");
 
         if (my_media) {
-          my_media.stop();
+          try{
+            my_media.stop();
+          }catch (err){
+            $("#putStatus").html("Error stop audio");
+          }
+
         }
         clearInterval(mediaTimer);
         mediaTimer = null;
