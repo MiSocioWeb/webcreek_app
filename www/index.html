@@ -79,19 +79,20 @@
             lengthChars= $(data).text().length; // 47
 
             if(lengthChars < 100 && badGate==true  ){
+
               contBad++;
+              if(contBad>4)contBad=1;
               if(contBad==1 || contBad==4 ){
                 stopAudio();
                 playAudio(pathBad);
               }
-              if(contBad>=4)contBad=0;
 
-              start_puertacamino();
               $("#putHtml").html(data);
             }
+            start_puertacamino();
           }else{
             contBad=0;
-            $("#description").html("not badgateway");
+            $("#putHtml").html("not badgateway");
             if(is_malapuertacamino){
               stopAudio();
               playAudio(pathGood);
@@ -100,11 +101,8 @@
             badGate=false;
             is_malapuertacamino=false;
             start_puertacamino();
-
           }
-
         });
-
       }
 
     </script>
@@ -123,16 +121,23 @@
 
       function playAudio(src) {
       $("#putStatus").html("Play");
+
         my_media = null;
         mediaTimer = null;
         if (my_media == null) {
           stopAudio();
-          my_media = new Media(src, onSuccess, onError);
+          try {
+            my_media = new Media(src, onSuccess, onError);
+          }catch(err){
+            $("#putStatus").html("error Playing");
+            return;
+          }
+
         }
         my_media.play();
         if (mediaTimer == null) {
           mediaTimer = setInterval(function() {
-            my_media.getCurrentPosition(
+           /* my_media.getCurrentPosition(
                     // success callback
                     function(position) {
                       if (position > -1) {
@@ -144,7 +149,7 @@
                       console.log("Error getting pos=" + e);
                       setAudioPosition("Error: " + e);
                     }
-            );
+            );*/
           }, 1000);
         }
       }
@@ -156,7 +161,7 @@
 
       function stopAudio() {
         $("#putStatus").html("Stop Audio");
-
+        return;
         if (my_media) {
           my_media.stop();
         }
